@@ -16,13 +16,59 @@ import Controller.Koneksi;
  */
 public class Data_Kasir extends javax.swing.JFrame {
 
+    private Connection conn = new Koneksi().connect();
+    private DefaultTableModel tabmode;
+
     /**
      * Creates new form Data_Kasir
      */
     public Data_Kasir() {
         initComponents();
+        kosong();
+        aktif();
+        datatable();
+    }
+private void kosong() {
+        txtid.setText("");
+        txtnama.setText("");
+        txttelpon.setText("");
+        txtalamat.setText("");
+        txtpassword.setText("");
+        txtkonfirm.setText("");
+        txtcari.setText("");
+        cbagama.setSelectedItem(null);//To change body of generated methods, choose Tools | Templates.
     }
 
+    private void aktif() {
+        txtid.requestFocus();
+        cbagama.setSelectedItem(null);//To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void datatable() {
+        Object[] Baris = {"ID Kasir", "Nama Kasir", "Jenis", "No. Telepon", "Agama", "Alamat","Password"};
+        tabmode = new DefaultTableModel(null, Baris);
+        String cariitem = txtcari.getText();
+        try {
+            String sql = "SELECT * FROM kasir where id_kasir like '%" + cariitem + "%' or nm_kasir like '%" + cariitem + "%' order by id_kasir asc";
+            Statement stat = conn.createStatement();
+            ResultSet hasil = stat.executeQuery(sql);
+            while (hasil.next()) {
+                tabmode.addRow(new Object[]{
+                    hasil.getString(1),
+                    hasil.getString(2),
+                    hasil.getString(3),
+                    hasil.getString(4),
+                    hasil.getString(5),
+                        hasil.getString(6),
+                        hasil.getString(7)
+                        
+                });
+            }
+            tblkasir.setModel(tabmode);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "data gagal dipanggil " + e);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -45,7 +91,7 @@ public class Data_Kasir extends javax.swing.JFrame {
         txtnama = new javax.swing.JTextField();
         rlaki = new javax.swing.JRadioButton();
         rperempuan = new javax.swing.JRadioButton();
-        jTextField3 = new javax.swing.JTextField();
+        txttelpon = new javax.swing.JTextField();
         cbagama = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtalamat = new javax.swing.JTextArea();
@@ -92,6 +138,12 @@ public class Data_Kasir extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel9.setText("Konfirmasi Password");
 
+        txtid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtidActionPerformed(evt);
+            }
+        });
+
         rlaki.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         rlaki.setText("Laki-Laki");
 
@@ -125,9 +177,25 @@ public class Data_Kasir extends javax.swing.JFrame {
                 "ID Pelanggan", "Nama Pelanggan", "Jenis Kelamin", "No.Telepon", "Agama", "Alamat"
             }
         ));
+        tblkasir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblkasirMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblkasir);
 
+        txtcari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtcariKeyPressed(evt);
+            }
+        });
+
         bcari.setText("Cari");
+        bcari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bcariActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -157,14 +225,39 @@ public class Data_Kasir extends javax.swing.JFrame {
         );
 
         bsimpan.setText("Simpan");
+        bsimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bsimpanActionPerformed(evt);
+            }
+        });
 
         bubah.setText("Ubah");
+        bubah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bubahActionPerformed(evt);
+            }
+        });
 
         bhapus.setText("Hapus");
+        bhapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bhapusActionPerformed(evt);
+            }
+        });
 
         bbatal.setText("Batal");
+        bbatal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bbatalActionPerformed(evt);
+            }
+        });
 
         bkeluar.setText("Keluar");
+        bkeluar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bkeluarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -201,7 +294,7 @@ public class Data_Kasir extends javax.swing.JFrame {
                     .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(cbagama, javax.swing.GroupLayout.Alignment.LEADING, 0, 349, Short.MAX_VALUE)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txttelpon, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(txtnama, javax.swing.GroupLayout.Alignment.LEADING))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(txtkonfirm)
@@ -241,7 +334,7 @@ public class Data_Kasir extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txttelpon, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(34, 34, 34)
@@ -289,6 +382,123 @@ public class Data_Kasir extends javax.swing.JFrame {
     private void cbagamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbagamaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbagamaActionPerformed
+
+    private void txtidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtidActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtidActionPerformed
+
+    private void bsimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bsimpanActionPerformed
+         String jenis = null;
+        if (rlaki.isSelected()) {
+            jenis = "Laki-Laki";
+        } else if (rperempuan.isSelected()) {
+            jenis = "Perempuan";
+        }   
+        String sql = "insert into kasir values (?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement stat = conn.prepareStatement(sql);
+            stat.setString(1, txtid.getText());
+            stat.setString(2, txtnama.getText());
+            stat.setString(3, jenis);
+            stat.setString(4, txttelpon.getText());
+            stat.setString(5, cbagama.getSelectedItem().toString());
+            stat.setString(6, txtalamat.getText());
+            stat.setString(7, txtpassword.getText());
+            stat.executeUpdate();
+            JOptionPane.showMessageDialog(null, "data berhasil disimpan");
+            kosong();
+            txtid.requestFocus();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "data gagal disimpan " + e);
+        }
+        datatable();
+    }//GEN-LAST:event_bsimpanActionPerformed
+
+    private void bubahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bubahActionPerformed
+        String jenis = null;
+        if (rlaki.isSelected()) {
+            jenis = "Laki-Laki";
+        } else if (rperempuan.isSelected()) {
+            jenis = "Perempuan";
+        }
+        try {
+            String sql = "update kasir set nm_kasir=?, jenis_kelamin=?,no_telepon=?, agama=?, alamat=?, password=? where id_kasir='" + txtid.getText() + "'";
+            PreparedStatement stat = conn.prepareStatement(sql);
+            stat.setString(1, txtnama.getText());
+            stat.setString(2, jenis);
+            stat.setString(3, txttelpon.getText());
+            stat.setString(4, cbagama.getSelectedItem().toString());
+            stat.setString(5, txtalamat.getText());
+            stat.setString(6, txtpassword.getText());
+            stat.executeUpdate();
+            JOptionPane.showMessageDialog(null, "data berhasil diubah");
+            kosong();
+            txtid.requestFocus();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "data gagal diubah " + e);
+        }
+        datatable();
+    }//GEN-LAST:event_bubahActionPerformed
+
+    private void bhapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bhapusActionPerformed
+        int ok = JOptionPane.showConfirmDialog(null, "hapus", "konfirmasi dialog", JOptionPane.YES_NO_OPTION);
+        if (ok == 0) {
+            String sql = "delete from kasir where id_kasir ='" + txtid.getText() + "'";
+            try {
+                PreparedStatement stat = conn.prepareStatement(sql);
+                stat.executeUpdate();
+                JOptionPane.showMessageDialog(null, "data berhasil dihapus");
+                kosong();
+                txtid.requestFocus();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "data gagal dihapus " + e);
+            }
+            datatable();
+        }    
+    }//GEN-LAST:event_bhapusActionPerformed
+
+    private void bbatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bbatalActionPerformed
+        kosong();
+        datatable();
+    }//GEN-LAST:event_bbatalActionPerformed
+
+    private void bkeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bkeluarActionPerformed
+            dispose(); 
+    }//GEN-LAST:event_bkeluarActionPerformed
+
+    private void tblkasirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblkasirMouseClicked
+        int bar = tblkasir.getSelectedRow();
+        String a = tabmode.getValueAt(bar, 0).toString();
+        String b = tabmode.getValueAt(bar, 1).toString();
+        String c = tabmode.getValueAt(bar, 2).toString();
+        String d = tabmode.getValueAt(bar, 3).toString();
+        String e = tabmode.getValueAt(bar, 4).toString();
+         String f = tabmode.getValueAt(bar, 5).toString();
+          String g = tabmode.getValueAt(bar, 6).toString();
+          
+        txtid.setText(a);
+        txtnama.setText(b);
+        if ("Laki-Laki".equals(c)) {
+            rlaki.setSelected(true);
+        } else {
+            rperempuan.setSelected(true);
+        }
+        txttelpon.setText(d);
+        cbagama.setSelectedItem(e);
+        txtalamat.setText(f);
+        txtpassword.setText(g);
+       
+    }//GEN-LAST:event_tblkasirMouseClicked
+
+    private void txtcariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcariKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            datatable();
+        }
+    }//GEN-LAST:event_txtcariKeyPressed
+
+    private void bcariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcariActionPerformed
+       datatable(); // TODO add your handling code here:
+    }//GEN-LAST:event_bcariActionPerformed
 
     /**
      * @param args the command line arguments
@@ -345,7 +555,6 @@ public class Data_Kasir extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JRadioButton rlaki;
     private javax.swing.JRadioButton rperempuan;
     private javax.swing.JTable tblkasir;
@@ -355,5 +564,6 @@ public class Data_Kasir extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtkonfirm;
     private javax.swing.JTextField txtnama;
     private javax.swing.JPasswordField txtpassword;
+    private javax.swing.JTextField txttelpon;
     // End of variables declaration//GEN-END:variables
 }

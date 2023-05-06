@@ -15,7 +15,7 @@ public class UserID {
         kd=kode;
     }
     
-   public static String setUserLogin(){
+   public static String getUserLogin(){
        return kd;
    }
 }
