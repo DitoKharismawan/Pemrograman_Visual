@@ -43,6 +43,8 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -56,8 +58,18 @@ public class Menu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jMenu1.setText("Master");
+        jLabel1.setFont(new java.awt.Font("Trebuchet MS", 1, 36)); // NOI18N
+        jLabel1.setText("Sistem Aplikasi Penjualan");
 
+        jLabel2.setFont(new java.awt.Font("Trebuchet MS", 1, 36)); // NOI18N
+        jLabel2.setText("Pemrograman Visual");
+
+        jMenuBar1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+
+        jMenu1.setText("Master");
+        jMenu1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+
+        jMenuItem1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jMenuItem1.setText("Pelanggan");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -66,6 +78,7 @@ public class Menu extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
+        jMenuItem2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jMenuItem2.setText("Barang");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -74,6 +87,7 @@ public class Menu extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem2);
 
+        jMenuItem3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jMenuItem3.setText("Kasir");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -85,14 +99,18 @@ public class Menu extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Transaksi");
+        jMenu2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
 
+        jMenuItem6.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jMenuItem6.setText("Nota");
         jMenu2.add(jMenuItem6);
 
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Laporan");
+        jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
 
+        jMenuItem4.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jMenuItem4.setText("Best Five Menu");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,6 +119,7 @@ public class Menu extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem4);
 
+        jMenuItem5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jMenuItem5.setText("Laporan Data Pelanggan");
         jMenu3.add(jMenuItem5);
 
@@ -112,11 +131,24 @@ public class Menu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 660, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(113, 113, 113)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(156, 156, 156)
+                        .addComponent(jLabel2)))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 463, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(160, 160, 160)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(159, Short.MAX_VALUE))
         );
 
         pack();
@@ -177,6 +209,8 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
