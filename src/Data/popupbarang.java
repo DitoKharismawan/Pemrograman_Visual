@@ -10,34 +10,33 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.KeyEvent;
 import Data.Nota;
 import Controller.Koneksi;
-
-
 /**
  *
  * @author dito
  */
-public class popuppelanggan extends javax.swing.JFrame {
+public class popupbarang extends javax.swing.JFrame {
 private Connection conn = new Koneksi().connect(); 
 private DefaultTableModel tabmode;
-public Nota plgn = null;
+public Nota brg = null;
     /**
-     * Creates new form popuppelanggan
+    /**
+     * Creates new form popupbarang
      */
-    public popuppelanggan() {
+    public popupbarang() {
         initComponents();
         datatable();
     }
-protected void datatable(){
-Object[] Baris ={"ID Pelanggan", "Nama", "Jenis Kelamin", "No. Telepon", "Alamat "};
+    protected void datatable(){
+Object[] Baris ={"Kode Barang", "Nama Barang", "Jenis", "Harga Beli", "Harga Jual"};
 tabmode = new DefaultTableModel (null, Baris);
 String cariitem=txtcari.getText();
 try {
-String sql = "SELECT * FROM pelanggan where id_plgn like '%"+cariitem+ "%' or nmplgn like '%"+cariitem+"%' order by id_plgn asc";
-Statement stat = conn.createStatement();
-ResultSet hasil=stat.executeQuery(sql);
+String sql = "SELECT * FROM barang where kd_brg like '%"+cariitem+ "%' or nm_brg like '%"+cariitem+ "%' order by kd_brg asc";
+java.sql.Statement stat = conn.createStatement();
+ResultSet hasil = stat.executeQuery(sql);
 while (hasil.next()){
-tabmode.addRow(new Object[]
-{
+tabmode.addRow(new Object[]{
+
 hasil.getString(1),
 hasil.getString(2),
 hasil.getString(3),
@@ -45,12 +44,11 @@ hasil.getString(4),
 hasil.getString(5)
 });
 }
-tblplgn.setModel(tabmode);
+tblbarang.setModel(tabmode);
 } catch (Exception e) {
+}
+    }
 
-JOptionPane.showMessageDialog(null, "data gagal dipanggil "+e);
-}
-}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -60,14 +58,11 @@ JOptionPane.showMessageDialog(null, "data gagal dipanggil "+e);
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
         txtcari = new javax.swing.JTextField();
         bcari = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblplgn = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-
-        jTextField1.setText("jTextField1");
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblbarang = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,7 +79,10 @@ JOptionPane.showMessageDialog(null, "data gagal dipanggil "+e);
             }
         });
 
-        tblplgn.setModel(new javax.swing.table.DefaultTableModel(
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setText("PopUp Barang");
+
+        tblbarang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -95,15 +93,17 @@ JOptionPane.showMessageDialog(null, "data gagal dipanggil "+e);
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblplgn.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblbarang.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblplgnMouseClicked(evt);
+                tblbarangMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblplgn);
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("PopUp Pelanggan");
+        tblbarang.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tblbarangKeyPressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblbarang);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -112,49 +112,54 @@ JOptionPane.showMessageDialog(null, "data gagal dipanggil "+e);
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(bcari)
-                        .addGap(138, 138, 138)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 21, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bcari)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tblplgnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblplgnMouseClicked
-int tabelPelanggan = tblplgn.getSelectedRow();
-plgn.id = tblplgn.getValueAt(tabelPelanggan, 0).toString();
-plgn.nama= tblplgn.getValueAt(tabelPelanggan, 1).toString();
-plgn.jenis = tblplgn.getValueAt(tabelPelanggan, 2).toString();
-plgn.telp = tblplgn.getValueAt (tabelPelanggan, 3).toString();
-plgn.almt = tblplgn.getValueAt(tabelPelanggan, 4).toString(); 
-plgn.itemTerpilih();
+    private void tblbarangKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblbarangKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblbarangKeyPressed
+
+    private void tblbarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblbarangMouseClicked
+  int tabelPelanggan = tblbarang.getSelectedRow();
+brg.kdbrg= tblbarang.getValueAt(tabelPelanggan, 0).toString();
+brg.nmbrg = tblbarang.getValueAt(tabelPelanggan, 1).toString();
+brg.jenisbrg = tblbarang.getValueAt(tabelPelanggan, 2).toString();
+brg.hb= tblbarang.getValueAt(tabelPelanggan, 3).toString();
+brg.hj = tblbarang.getValueAt(tabelPelanggan, 4).toString(); 
+brg.itemTerpilihBrg();
 this.dispose();
-    }//GEN-LAST:event_tblplgnMouseClicked
+    }//GEN-LAST:event_tblbarangMouseClicked
 
     private void bcariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcariActionPerformed
        datatable();
     }//GEN-LAST:event_bcariActionPerformed
 
     private void txtcariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcariKeyPressed
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+      if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             datatable();
         }
     }//GEN-LAST:event_txtcariKeyPressed
@@ -176,20 +181,20 @@ this.dispose();
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(popuppelanggan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(popupbarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(popuppelanggan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(popupbarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(popuppelanggan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(popupbarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(popuppelanggan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(popupbarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new popuppelanggan().setVisible(true);
+                new popupbarang().setVisible(true);
             }
         });
     }
@@ -198,8 +203,7 @@ this.dispose();
     private javax.swing.JButton bcari;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTable tblplgn;
+    private javax.swing.JTable tblbarang;
     private javax.swing.JTextField txtcari;
     // End of variables declaration//GEN-END:variables
 }

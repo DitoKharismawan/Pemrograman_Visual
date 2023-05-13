@@ -19,6 +19,7 @@ import net.sf.jasperreports.view.JasperViewer;
 import Data.Data_Plgn;
 import Data.Data_Kasir;
 import Data.Data_Barang;
+import Data.Nota;
 import Controller.Koneksi;
 //import net.sf.jasperreports.engine. Jasper FillManager;
 //import net.sf.jasperreports.engine. Jasper Print;
@@ -31,7 +32,7 @@ public class Menu extends javax.swing.JFrame {
     public Menu() {
         initComponents();
     this.setExtendedState (Menu.MAXIMIZED_BOTH);
-    akses ();
+        akses ();
     }
 
     /**
@@ -103,6 +104,11 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuItem6.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jMenuItem6.setText("Nota");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem6);
 
         jMenuBar1.add(jMenu2);
@@ -173,6 +179,11 @@ public class Menu extends javax.swing.JFrame {
         frmK.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+       Nota frmN = new Nota();
+       frmN.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -223,19 +234,20 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     // End of variables declaration//GEN-END:variables
 
-    protected void akses() {
+   
+        protected void akses() {
       String KD = UserID.getUserLogin(); 
-//jLabel16.setText (KD);
-//String nmka-jLabel17.getText();
+//jLabel3.setText (KD);
+//String nmka=jLabel6.getText();
 try{
 String sql = "SELECT * FROM kasir WHERE id_kasir='"+KD+"'";
 Statement stat = conn.createStatement();
 ResultSet hasil = stat.executeQuery(sql);
 if (hasil.next()){
-if (hasil.getString("nama_kasir").equals("Ika")) {
+if (hasil.getString("nm_kasir").equals("Budi")) {
 jMenuItem1.setEnabled(false);
 }
-else if (hasil.getString("nama_kasir").equals ("Ryan")) {
+else if (hasil.getString("nm_kasir").equals ("Ryan")) {
 jMenuItem1.setEnabled(false);
 jMenuItem2.setEnabled(false);
 }
@@ -245,6 +257,9 @@ JOptionPane.showMessageDialog(null, "Selamat Datang Admin");
 }
 } catch (SQLException e) {
     }
- }
 }
+    }
+
+
+
 
