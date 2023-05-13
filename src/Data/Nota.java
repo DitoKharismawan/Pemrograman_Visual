@@ -17,6 +17,10 @@ import Login.UserID;
  * @author dito
  */
 public class Nota extends javax.swing.JFrame {
+
+    /**
+     *
+     */
     public String id, nama, jenis, telp, almt;
     public String kdbrg, nmbrg, jenisbrg, hb, hj;
     private Connection conn = new Koneksi().connect();
